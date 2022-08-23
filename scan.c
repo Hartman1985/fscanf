@@ -8,16 +8,23 @@
 #include <string.h>
 #include <unistd.h>
 
-char const* const VERSIONSNR = "0.1.2";
+char const* const VERSIONSNR = "0.1.3-Aplpha";
 
-int const DB_SIZE = 20;
+int const DB_SIZE = 40;
 
 struct person
 {
-    int  personalnummer;
-    char nachname[20];
-    char vorname[20];
-    int  geburtsjahr;
+    int  position;
+    char vorname[40];
+    char nachname[40];
+    char geburtsdatum[30];
+    char todestag[30];
+    char familienname[40];
+    char beziehungsstatus[20];
+    char adresse[50];
+    int  kinder;
+    int kindvon;
+
 };
 typedef struct person person_t;
 
@@ -34,18 +41,30 @@ void readcsv(char const* const datei)
     }
     person_t database[DB_SIZE];
     while(fscanf(filepointer,
-                 "%d,%[^,],%[^,],%d",
-                 &database[zaehler].personalnummer,
+                 "%d,%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%d,%d \n",
+                 &database[zaehler].position,
                  database[zaehler].nachname,
                  database[zaehler].vorname,
-                 &database[zaehler].geburtsjahr)
+                 database[zaehler].geburtsdatum,
+		 database[zaehler].todestag,
+		 database[zaehler].familienname,
+		 database[zaehler].beziehungsstatus,
+		 database[zaehler].adresse,
+		 &database[zaehler].kinder,
+		 &database[zaehler].kindvon)
           != EOF)
     {
-        printf("%d, %s, %s, %d \n",
-               database[zaehler].personalnummer,
+        printf("%d, %s, %s, %s,%s,%s,%s,%s,%d,%d \n",
+               database[zaehler].position,
                database[zaehler].nachname,
                database[zaehler].vorname,
-               database[zaehler].geburtsjahr);
+               database[zaehler].geburtsdatum,
+	       database[zaehler].todestag,
+               database[zaehler].familienname,
+	       database[zaehler].beziehungsstatus,
+	       database[zaehler].adresse,
+	       database[zaehler].kinder,
+	       database[zaehler].kindvon);
         zaehler++;
         if(zaehler == DB_SIZE)
         {
